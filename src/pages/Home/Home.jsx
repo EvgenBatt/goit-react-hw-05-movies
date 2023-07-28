@@ -5,7 +5,7 @@ import { getTrendsMovie } from 'service/api';
 import { Section } from 'styles/Common.styled';
 import { Title } from './Home.styled';
 
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,3 +38,5 @@ export const Home = () => {
     </main>
   );
 };
+
+export default Home;

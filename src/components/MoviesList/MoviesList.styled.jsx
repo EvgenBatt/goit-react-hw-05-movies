@@ -20,8 +20,4 @@ export const LinkStyled = styled(Link)`
     color: #ff3842;
     font-weight: bold;
   }
-
-  &:visited {
-    color: #818080a8;
-  }
 `;

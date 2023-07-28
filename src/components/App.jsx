@@ -1,9 +1,15 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Header } from './Header/Header';
-import { Home, MovieDetails, Movies } from 'pages';
 import { routes } from 'routes';
-import { Cast } from './Cast/Cast';
-import { Review } from './Review/Review';
+import { Header } from 'components';
+import { lazy } from 'react';
+
+const Home = lazy(() => import('pages/Home/Home'));
+const Movies = lazy(() => import('pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('pages/MovieDetails/MovieDetails'));
+const Error = lazy(() => import('pages/Error/Error'));
+
+const Cast = lazy(() => import('components/Cast/Cast'));
+const Review = lazy(() => import('components/Review/Review'));
 
 export const App = () => {
   return (
@@ -13,11 +19,12 @@ export const App = () => {
           <Route index element={<Home />} />
           <Route path={routes.MOVIES} element={<Movies />} />
           <Route path={routes.MOVIE_DETAILS} element={<MovieDetails />}>
-            <Route path="cast" element={<Cast />} />
-            <Route path="reviews" element={<Review />} />
+            <Route path={routes.MOVIE_CAST} exact element={<Cast />} />
+            <Route path={routes.MOVIE_REVIEWS} exact element={<Review />} />
           </Route>
+          <Route path={routes.ERROR} element={<Error />} />
         </Route>
-        <Route path="*" element={<Navigate to={routes.HOME} replace />} />
+        <Route path="*" element={<Navigate to={routes.ERROR} replace />} />
       </Routes>
     </>
   );

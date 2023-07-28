@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCredits } from 'service/api';
+import { Image, Li, Text, TextWrap, Title, Ul } from './Cast.styled';
 
-export const Cast = () => {
+const Cast = () => {
   const { movieId } = useParams();
   const [cast, setCast] = useState([]);
 
@@ -23,29 +24,32 @@ export const Cast = () => {
     <>
       {cast.length === 0 && <p>Casts not found</p>}
       {cast.length > 0 && (
-        <ul>
+        <Ul>
           {cast.map(({ id, profile_path, character, original_name }) => {
             const imageUrl = `https://image.tmdb.org/t/p/w500${profile_path}`;
             const defaultImageUrl =
               "https://placehold.co/500x800?text=Haven't+Image";
 
             return (
-              <li key={id}>
-                <img
+              <Li key={id}>
+                <Image
+                  loading="lazy"
                   src={`${profile_path ? imageUrl : defaultImageUrl}`}
                   alt={original_name}
                 />
-                <h3>
-                  Actor: <span>{original_name}</span>
-                </h3>
-                <p>
-                  Character: <span>{character}</span>
-                </p>
-              </li>
+                <TextWrap>
+                  <Title>{original_name}</Title>
+                  <Text>
+                    Character: <span>{character}</span>
+                  </Text>
+                </TextWrap>
+              </Li>
             );
           })}
-        </ul>
+        </Ul>
       )}
     </>
   );
 };
+
+export default Cast;

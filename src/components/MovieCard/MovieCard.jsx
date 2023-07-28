@@ -1,4 +1,5 @@
-import { CardWrap, Img, TextWrap } from "./MovieCard.styled";
+import { CardWrap, Img, TextWrap } from './MovieCard.styled';
+import PropTypes from 'prop-types';
 
 export const MovieCard = ({ movie }) => {
   const { poster_path, original_title, title, overview, genres, vote_average } =
@@ -41,4 +42,19 @@ export const MovieCard = ({ movie }) => {
       </CardWrap>
     </>
   );
+};
+
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    poster_path: PropTypes.string,
+    original_title: PropTypes.string,
+    title: PropTypes.string,
+    overview: PropTypes.string,
+    genres: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ),
+    vote_average: PropTypes.number,
+  }).isRequired,
 };

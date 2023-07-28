@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getSearchMovie } from 'service/api';
 import { Section } from 'styles/Common.styled';
 
-export const Movies = () => {
+const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -52,3 +52,5 @@ export const Movies = () => {
     </main>
   );
 };
+
+export default Movies;

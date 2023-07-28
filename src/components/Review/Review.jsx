@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieReviews } from 'service/api';
+import { Li, SectionWrap, Text, Title, Ul } from './Review.styled';
 
-export const Review = () => {
+const Review = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
 
@@ -19,22 +20,26 @@ export const Review = () => {
   }, [movieId]);
 
   return (
-    <div>
-      {reviews.length === 0 && <p>Reviews not found</p>}
-      {reviews.length > 0 && (
-        <ul>
-          {reviews.map(({ id, author, content }) => {
-            return (
-              <li key={id}>
-                <h3>
-                  Author: <span>{author}</span>
-                </h3>
-                <p>{content}</p>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </div>
+    <>
+      <SectionWrap>
+        {reviews.length === 0 && <p>Reviews not found</p>}
+        {reviews.length > 0 && (
+          <Ul>
+            {reviews.map(({ id, author, content }) => {
+              return (
+                <Li key={id}>
+                  <Title>
+                    Author: <span>{author}</span>
+                  </Title>
+                  <Text>{content}</Text>
+                </Li>
+              );
+            })}
+          </Ul>
+        )}
+      </SectionWrap>
+    </>
   );
 };
+
+export default Review;

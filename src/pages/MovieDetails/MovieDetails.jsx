@@ -1,13 +1,13 @@
 import { Container } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Suspense, useEffect, useState } from 'react';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { routes } from 'routes';
 import { getMovieDetails } from 'service/api';
 import { MovieCard, Loader } from 'components';
 import { Section } from 'styles/Common.styled';
 import { Button, SubTitle, Ul, LinkStyled } from './MovieDetails.styled';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
@@ -48,8 +48,13 @@ export const MovieDetails = () => {
             </li>
           </Ul>
           {isLoading && <Loader />}
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
         </Container>
       </Section>
     </main>
   );
 };
+
+export default MovieDetails;
