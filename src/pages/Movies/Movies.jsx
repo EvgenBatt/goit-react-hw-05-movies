@@ -3,6 +3,7 @@ import { Loader, MoviesList, SearchForm } from 'components';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchMovie } from 'service/api';
+import { Section } from 'styles/Common.styled';
 
 export const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -40,12 +41,14 @@ export const Movies = () => {
 
   return (
     <main>
-      <Container>
-        <SearchForm onSubmit={handleFormSubmit} />
-        {query && movies.length === 0 && <p>No movies found.</p>}
-        {movies.length > 0 && <MoviesList movies={movies} />}
-        {isLoading && <Loader />}
-      </Container>
+      <Section>
+        <Container>
+          <SearchForm onSubmit={handleFormSubmit} />
+          {query && movies.length === 0 && <p>No movies found.</p>}
+          {movies.length > 0 && <MoviesList movies={movies} />}
+          {isLoading && <Loader />}
+        </Container>
+      </Section>
     </main>
   );
 };

@@ -1,10 +1,11 @@
 import { Container } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { routes } from 'routes';
 import { getMovieDetails } from 'service/api';
-import { Button, Section } from './MovieDetails.styled';
 import { MovieCard, Loader } from 'components';
+import { Section } from 'styles/Common.styled';
+import { Button, SubTitle, Ul, LinkStyled } from './MovieDetails.styled';
 
 export const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
@@ -37,15 +38,15 @@ export const MovieDetails = () => {
         <Container>
           <Button to={goBackLink}>Go Back</Button>
           {movie && <MovieCard movie={movie} />}
-          <h3>Additional information</h3>
-          <ul>
+          <SubTitle>Additional information</SubTitle>
+          <Ul>
             <li>
-              <Link to="cast">Cast</Link>
+              <LinkStyled to="cast">Cast</LinkStyled>
             </li>
             <li>
-              <Link to="reviews">Reviews</Link>
+              <LinkStyled to="reviews">Reviews</LinkStyled>
             </li>
-          </ul>
+          </Ul>
           {isLoading && <Loader />}
         </Container>
       </Section>

@@ -4,8 +4,7 @@ import { TextField, Button } from '@mui/material';
 export const Form = styled.form`
   display: flex;
   align-items: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 `;
 
 export const Input = styled(TextField)`

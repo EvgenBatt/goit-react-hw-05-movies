@@ -2,6 +2,8 @@ import { Container } from '@mui/material';
 import { Loader, MoviesList } from 'components';
 import { useEffect, useState } from 'react';
 import { getTrendsMovie } from 'service/api';
+import { Section } from 'styles/Common.styled';
+import { Title } from './Home.styled';
 
 export const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -26,11 +28,13 @@ export const Home = () => {
 
   return (
     <main>
-      <Container>
-        <h1>Trending Today</h1>
-        <MoviesList movies={movies} />
-        {isLoading && <Loader />}
-      </Container>
+      <Section>
+        <Container>
+          <Title>Trending Today</Title>
+          <MoviesList movies={movies} />
+          {isLoading && <Loader />}
+        </Container>
+      </Section>
     </main>
   );
 };

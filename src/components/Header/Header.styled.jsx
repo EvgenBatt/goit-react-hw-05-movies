@@ -7,7 +7,7 @@ export const NavBar = styled.header`
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: #142062;
-  box-shadow: 0px 2px 10px 1px #142062;
+  box-shadow: 0px 2px 7px 1px #142062;
 `;
 
 export const HeaderWrapper = styled.div`
