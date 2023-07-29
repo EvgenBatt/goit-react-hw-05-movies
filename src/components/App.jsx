@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { routes } from 'routes';
 import { Header } from 'components';
 import { lazy } from 'react';
@@ -22,9 +22,8 @@ export const App = () => {
             <Route path={routes.MOVIE_CAST} exact element={<Cast />} />
             <Route path={routes.MOVIE_REVIEWS} exact element={<Review />} />
           </Route>
-          <Route path={routes.ERROR} element={<Error />} />
         </Route>
-        <Route path="*" element={<Navigate to={routes.ERROR} replace />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </>
   );

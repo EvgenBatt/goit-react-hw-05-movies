@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { routes } from 'routes';
 import { getMovieDetails } from 'service/api';
@@ -9,6 +9,7 @@ import { Button, SubTitle, Ul, LinkStyled } from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
   const location = useLocation();
@@ -21,7 +22,7 @@ const MovieDetails = () => {
         const data = await getMovieDetails(movieId);
         setMovie(data);
       } catch (error) {
-        console.error(error);
+        setError(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -30,13 +31,13 @@ const MovieDetails = () => {
     fetchData();
   }, [movieId]);
 
-  const goBackLink = location?.state?.from ?? routes.HOME;
+  const goBackLink = useRef(location?.state?.from ?? routes.HOME);
 
   return (
     <main>
       <Section>
         <Container>
-          <Button to={goBackLink}>Go Back</Button>
+          <Button to={goBackLink.current}>Go Back</Button>
           {movie && <MovieCard movie={movie} />}
           <SubTitle>Additional information</SubTitle>
           <Ul>
@@ -48,6 +49,7 @@ const MovieDetails = () => {
             </li>
           </Ul>
           {isLoading && <Loader />}
+          {error && <p>Oops... Something went wrong...</p>}
           <Suspense fallback={<Loader />}>
             <Outlet />
           </Suspense>

@@ -30,6 +30,6 @@ export const TextWrap = styled.div`
 
 export const Text = styled.p`
   font-weight: 700;
-  font-size: 26px;
+  font-size: 28px;
   text-align: center;
 `;

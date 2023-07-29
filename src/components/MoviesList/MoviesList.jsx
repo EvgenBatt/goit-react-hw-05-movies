@@ -8,10 +8,10 @@ export const MoviesList = ({ movies }) => {
 
   return (
     <Ol>
-      {movies.map(({ id, title, name }) => (
+      {movies.map(({ id, title, name, original_title }) => (
         <Li key={id}>
           <LinkStyled state={{ from: location }} to={`${routes.MOVIES}/${id}`}>
-            {title || name}
+            {title || name || original_title}
           </LinkStyled>
         </Li>
       ))}

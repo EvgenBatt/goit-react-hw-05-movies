@@ -2,18 +2,25 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCredits } from 'service/api';
 import { Image, Li, Text, TextWrap, Title, Ul } from './Cast.styled';
+import { Loader } from 'components';
 
 const Cast = () => {
   const { movieId } = useParams();
   const [cast, setCast] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    setIsLoading(true);
+
+    const fetchData = async () => {  
       try {
         const cast = await getMovieCredits(movieId);
         setCast(cast.cast);
       } catch (error) {
-        console.log(error.message);
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -48,6 +55,8 @@ const Cast = () => {
           })}
         </Ul>
       )}
+      {isLoading && <Loader />}
+      {error && <p>Oops... Something went wrong...</p>}
     </>
   );
 };

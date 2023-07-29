@@ -6,18 +6,16 @@ import { getSearchMovie } from 'service/api';
 import { Section } from 'styles/Common.styled';
 
 const Movies = () => {
-  const [movies, setMovies] = useState([]);
-  const [query, setQuery] = useState('');
+  const [movies, setMovies] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const queryParam = searchParams.get('query') || '';
+    const queryParam = searchParams.get('query');
     if (queryParam) {
       fetchData(queryParam);
-    } else {
-      setMovies([]);
     }
   }, [searchParams]);
 
@@ -28,14 +26,13 @@ const Movies = () => {
       const data = await getSearchMovie(queryParam);
       setMovies(data.results);
     } catch (error) {
-      console.error(error);
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleFormSubmit = queryParam => {
-    setQuery(queryParam);
     setSearchParams({ query: queryParam });
   };
 
@@ -44,9 +41,17 @@ const Movies = () => {
       <Section>
         <Container>
           <SearchForm onSubmit={handleFormSubmit} />
-          {query && movies.length === 0 && <p>No movies found.</p>}
-          {movies.length > 0 && <MoviesList movies={movies} />}
+          {movies !== null ? (
+            movies.length > 0 ? (
+              <MoviesList movies={movies} />
+            ) : (
+              <p>No movies found</p>
+            )
+          ) : (
+            isLoading && <Loader />
+          )}
           {isLoading && <Loader />}
+          {error && <p>Oops... Something went wrong...</p>}
         </Container>
       </Section>
     </main>

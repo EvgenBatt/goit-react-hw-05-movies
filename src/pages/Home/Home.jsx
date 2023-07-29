@@ -6,7 +6,8 @@ import { Section } from 'styles/Common.styled';
 import { Title } from './Home.styled';
 
 const Home = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const Home = () => {
         const data = await getTrendsMovie();
         setMovies(data.results);
       } catch (error) {
-        console.error(error);
+        setError(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -31,8 +32,9 @@ const Home = () => {
       <Section>
         <Container>
           <Title>Trending Today</Title>
-          <MoviesList movies={movies} />
+          {movies && <MoviesList movies={movies} />}
           {isLoading && <Loader />}
+          {error && <p>Oops... Something went wrong...</p>}
         </Container>
       </Section>
     </main>

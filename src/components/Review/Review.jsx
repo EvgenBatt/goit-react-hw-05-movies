@@ -2,18 +2,25 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieReviews } from 'service/api';
 import { Li, SectionWrap, Text, Title, Ul } from './Review.styled';
+import { Loader } from 'components';
 
 const Review = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
+
     const fetchData = async () => {
       try {
         const review = await getMovieReviews(movieId);
         setReviews(review.results);
       } catch (error) {
-        console.error(error);
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -37,6 +44,8 @@ const Review = () => {
             })}
           </Ul>
         )}
+        {isLoading && <Loader />}
+        {error && <p>Oops... Something went wrong...</p>}
       </SectionWrap>
     </>
   );
