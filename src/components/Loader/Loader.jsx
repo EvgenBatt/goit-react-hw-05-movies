@@ -10,7 +10,7 @@ export const Loader = () => (
       color="#3f51b5"
       ariaLabel="watch-loading"
       visible={true}
-      timeout={5000}
+      timeout={3000}
     />
   </WrapWatch>
 );
